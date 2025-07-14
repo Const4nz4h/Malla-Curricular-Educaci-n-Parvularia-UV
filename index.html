@@ -5,12 +5,149 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Malla Educación Parvularia</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f8f9fa;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    #malla {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .semestre {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .semestre h2 {
+      font-size: 1.1em;
+      margin-bottom: 10px;
+    }
+
+    .asignatura {
+      padding: 8px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      color: white;
+      transition: 0.3s;
+    }
+
+    .desbloqueada {
+      opacity: 1;
+    }
+
+    .bloqueada {
+      background: #ccc;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* Colores de grupo en escala de verdes */
+    .grupo-1  { background: #81c784; }
+    .grupo-2  { background: #66bb6a; }
+    .grupo-3  { background: #4caf50; }
+    .grupo-4  { background: #388e3c; }
+    .grupo-5  { background: #2e7d32; }
+    .grupo-6  { background: #43a047; }
+    .grupo-7  { background: #388e3c; }
+    .grupo-8  { background: #1b5e20; }
+  </style>
 </head>
 <body>
   <h1>Malla Curricular - Educación Parvularia</h1>
   <div id="malla"></div>
   <button onclick="reiniciar()">🔄 Reiniciar Progreso</button>
 
-  <script src="script.js"></script>
+  <script>
+    const malla = [
+      {
+        titulo: "Primer Año - Primer Semestre",
+        asignaturas: [
+          { id: "parv111", nombre: "Parv 111 Bases Socio Antropológicas Y Filosóficas De La Educación" },
+          { id: "parv112", nombre: "Parv 112 Infancia Y Transformaciones De La Modernidad" },
+          { id: "parv113", nombre: "Parv 113 Desarrollo Personal, Emocionalidad Autorregulación" },
+          { id: "parv114", nombre: "Parv 114 Lenguaje Y Cognición" },
+          { id: "parv115", nombre: "Parv 115 Fundamentos Y Practica De La Educación Parvularia", grupo: 1 },
+          { id: "parv116", nombre: "Parv 116 Sensibilidad, Creatividad Y Lenguajes Expresivos", grupo: 2 },
+          { id: "parv117", nombre: "Parv 117 Biología Humana", grupo: 3 }
+        ]
+      },
+      {
+        titulo: "Primer Año - Segundo Semestre",
+        asignaturas: [
+          { id: "parv121", nombre: "Parv 121 Teorías De La Educación Y Corrientes Pedagógicas Contemporáneas" },
+          { id: "parv122", nombre: "Parv 122 Ética, Valores Y Ciudadanía" },
+          { id: "parv123", nombre: "Parv 123 Construcción De La Identidad Profesional" },
+          { id: "parv124", nombre: "Parv 124 Lenguajes Artísticos", requiere: "parv116", grupo: 2 },
+          { id: "parv125", nombre: "Parv 125 Profesionalismo Y Practica Inicial I", requiere: "parv115", grupo: 1 },
+          { id: "parv126", nombre: "Parv 126 Bases Neurobiológicas Del Ser Humano", requiere: "parv117", grupo: 3 },
+          { id: "parv127", nombre: "Parv 127 Psicología General Y Del Desarrollo", grupo: 4 }
+        ]
+      }
+      // Aquí puedes seguir agregando los demás años y semestres
+    ];
+
+    function crearMalla() {
+      const contenedor = document.getElementById('malla');
+      contenedor.innerHTML = '';
+
+      const aprobadas = JSON.parse(localStorage.getItem('aprobadas') || '[]');
+
+      for (const semestre of malla) {
+        const div = document.createElement('div');
+        div.className = 'semestre';
+        div.innerHTML = `<h2>${semestre.titulo}</h2>`;
+
+        for (const ramo of semestre.asignaturas) {
+          const asig = document.createElement('div');
+          asig.className = 'asignatura';
+          asig.textContent = ramo.nombre;
+          asig.dataset.id = ramo.id;
+
+          if (ramo.grupo) asig.classList.add(`grupo-${ramo.grupo}`);
+
+          const cumplido = !ramo.requiere || aprobadas.includes(ramo.requiere);
+
+          if (cumplido) {
+            asig.classList.add('desbloqueada');
+            asig.onclick = () => aprobarRamo(ramo.id);
+          } else {
+            asig.classList.add('bloqueada');
+          }
+
+          div.appendChild(asig);
+        }
+        contenedor.appendChild(div);
+      }
+    }
+
+    function aprobarRamo(id) {
+      const aprobadas = JSON.parse(localStorage.getItem('aprobadas') || '[]');
+      if (!aprobadas.includes(id)) {
+        aprobadas.push(id);
+        localStorage.setItem('aprobadas', JSON.stringify(aprobadas));
+        crearMalla();
+      }
+    }
+
+    function reiniciar() {
+      localStorage.removeItem('aprobadas');
+      crearMalla();
+    }
+
+    crearMalla();
+  </script>
 </body>
 </html>

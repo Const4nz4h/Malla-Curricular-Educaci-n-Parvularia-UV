@@ -1,57 +1,54 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f3fdf4;
-  color: #222;
-  margin: 0;
+  font-family: sans-serif;
+  background: #f8f9fa;
   padding: 20px;
 }
 
 h1 {
   text-align: center;
-  color: #2c6e49;
+  margin-bottom: 30px;
 }
 
-#malla-container {
+#malla {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 15px;
-  max-width: 1400px;
-  margin: auto;
-}
-
-.ramo {
-  background-color: #b7e4c7;
-  border: 2px solid #40916c;
-  border-radius: 10px;
-  padding: 10px;
-  cursor: pointer;
-  user-select: none;
-  transition: 0.3s;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-}
-
-.ramo:hover {
-  background-color: #95d5b2;
-}
-
-.ramo.bloqueado {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.ramo.aprobado {
-  background-color: #52b788;
-  border-color: #2d6a4f;
-  color: white;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
 }
 
 .semestre {
-  border-top: 4px solid #2d6a4f;
-  margin-top: 30px;
-  padding-top: 10px;
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
 .semestre h2 {
-  grid-column: span 5;
-  color: #1b4332;
+  font-size: 1.1em;
+  margin-bottom: 10px;
 }
+
+.asignatura {
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s;
+}
+
+.desbloqueada {
+  opacity: 1;
+}
+
+.bloqueada {
+  background: #ccc;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Grupos en verde */
+.grupo-1 { background: #81c784; }
+.grupo-2 { background: #66bb6a; }
+.grupo-3 { background: #4caf50; }
+.grupo-4 { background: #388e3c; }
+.grupo-5 { background: #2e7d32; }

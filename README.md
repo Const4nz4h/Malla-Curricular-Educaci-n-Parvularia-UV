@@ -1,1 +1,1 @@
-# Malla-Curricular-Educaci-n-Parvularia-UV
+# Malla-Curricular-Educacion-Parvularia-UV

@@ -11,7 +11,7 @@ h1 {
 
 #malla {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
 
@@ -46,9 +46,12 @@ h1 {
   pointer-events: none;
 }
 
-/* Grupos en verde */
-.grupo-1 { background: #81c784; }
-.grupo-2 { background: #66bb6a; }
-.grupo-3 { background: #4caf50; }
-.grupo-4 { background: #388e3c; }
-.grupo-5 { background: #2e7d32; }
+/* Colores de grupo en escala de verdes */
+.grupo-1  { background: #81c784; }
+.grupo-2  { background: #66bb6a; }
+.grupo-3  { background: #4caf50; }
+.grupo-4  { background: #388e3c; }
+.grupo-5  { background: #2e7d32; }
+.grupo-6  { background: #43a047; }
+.grupo-7  { background: #388e3c; }
+.grupo-8  { background: #1b5e20; }
